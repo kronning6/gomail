@@ -1,4 +1,4 @@
-package main
+package gmail
 
 import (
 	"context"
@@ -15,9 +15,9 @@ import (
 	"google.golang.org/api/option"
 )
 
-func main() {
+func Mail() {
 	ctx := context.Background()
-	b, err := os.ReadFile("credentials.json")
+	b, err := os.ReadFile("./gmail/credentials.json")
 	if err != nil {
 		log.Fatalf("Unable to read client secret file: %v", err)
 	}
@@ -75,7 +75,7 @@ func main() {
 }
 
 func getClient(config *oauth2.Config) *http.Client {
-	tokFile := "token.json"
+	tokFile := "./gmail/token.json"
 	tok, err := tokenFromFile(tokFile)
 	if err != nil {
 		tok = getTokenFromWeb(config)
