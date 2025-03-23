@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/kronning6/gmail-screener/gmail"
+	"github.com/kronning6/gomail/gmail"
 	"github.com/spf13/cobra"
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "gmail",
-	Short: "Gmail is an email screening power tool",
+	Use:   "gomail",
+	Short: "gomail is an email screening power tool for Gmail",
 	Run: func(cmd *cobra.Command, args []string) {
 		gmail.Screener()
 	},

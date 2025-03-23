@@ -1,4 +1,4 @@
-module github.com/kronning6/gmail-screener
+module github.com/kronning6/gomail
 
 go 1.24.1
 

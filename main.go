@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/kronning6/gmail-screener/cmd"
+	"github.com/kronning6/gomail/cmd"
 )
 
 func main() {
