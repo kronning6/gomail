@@ -15,7 +15,7 @@ import (
 	"google.golang.org/api/option"
 )
 
-func Mail() {
+func Screener() {
 	ctx := context.Background()
 	b, err := os.ReadFile("./gmail/credentials.json")
 	if err != nil {
