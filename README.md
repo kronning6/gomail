@@ -21,22 +21,21 @@ This project was started from: https://developers.google.com/gmail/api/quickstar
 To get started, follow the instructions to enable the Gmail API on your account and populate
 `credentials.json` from the `credentials-eample.json` file.
 
-Run `go run main.go`. The first time you run it you'll have to manually parse out the token and paste it back
-into the terminal.
+To authenticate run `go run main.goi setup`.
 
 ## Roadmap
 
-- Get all emails received today
-- Display emails using Charm
-- Select email and load all emails from sender and be able to review
-- Mass delete selected emails by sender
-- Find all emails for a set of senders
-- Keep track of senders and screen (isolate) new senders with Yes or No
-- Store and manage sender status in Turso DB
-- See if any emails from the sender are important
-- See if any screened out emails are important
-- Unsubscribe from emails
-- AI
+- [x] Get all emails received today
+- [ ] Display emails using Charm
+- [ ] Select email and load all emails from sender and be able to review
+- [ ] Mass delete selected emails by sender
+- [ ] Find all emails for a set of senders
+- [ ] Keep track of senders and screen (isolate) new senders with Yes or No
+- [ ] Store and manage sender status in Turso DB
+- [ ] See if any emails from the sender are important
+- [ ] See if any screened out emails are important
+- [ ] Unsubscribe from emails
+- [ ] AI
 
 ## Core Problems
 

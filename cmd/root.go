@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	_ "github.com/kronning6/gomail/gmail"
+	"github.com/kronning6/gomail/gmail"
 	"github.com/kronning6/gomail/internal/charm"
 	"github.com/spf13/cobra"
 )
@@ -13,7 +13,7 @@ var rootCmd = &cobra.Command{
 	Use:   "gomail",
 	Short: "gomail is an email screening power tool for Gmail",
 	Run: func(cmd *cobra.Command, args []string) {
-		// gmail.Screener()
+		gmail.Screener(false)
 		charm.StartTeaProgram(charm.NewModel())
 	},
 }
@@ -26,5 +26,5 @@ func Execute() {
 }
 
 func init() {
-	rootCmd.AddCommand(starredCmd)
+	rootCmd.AddCommand(setupCmd)
 }
