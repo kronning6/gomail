@@ -14,6 +14,8 @@ type KeyMap struct {
 	Down   key.Binding
 	Select key.Binding
 	View   key.Binding
+	Back   key.Binding
+	Delete key.Binding
 }
 
 var CommonKeyMap = KeyMap{
@@ -31,11 +33,19 @@ var CommonKeyMap = KeyMap{
 	),
 	Select: key.NewBinding(
 		key.WithKeys("x"),
-		key.WithHelp("x", "x"),
+		key.WithHelp("x", "select"),
 	),
 	View: key.NewBinding(
-		key.WithKeys("enter"),
-		key.WithHelp("enter", "enter"),
+		key.WithKeys("enter", "o"),
+		key.WithHelp("enter", "view"),
+	),
+	Back: key.NewBinding(
+		key.WithKeys("u"),
+		key.WithHelp("u", "back to threadlist"),
+	),
+	Delete: key.NewBinding(
+		key.WithKeys("#"),
+		key.WithHelp("#", "delete"),
 	),
 }
 
