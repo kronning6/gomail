@@ -2,26 +2,44 @@ package charm
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/charmbracelet/bubbles/key"
+	"github.com/charmbracelet/bubbles/spinner"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
+	"github.com/kronning6/gomail/gmail"
 )
 
 type model struct {
-	choices  []string
+	spinner  spinner.Model
+	messages []string
 	cursor   int
 	selected map[int]struct{}
+	viewing  int
 }
 
-func NewModel() model {
+func ProgramModel() model {
+	s := spinner.New()
+	s.Spinner = spinner.Dot
+	s.Style = lipgloss.NewStyle().Foreground(lipgloss.Color("#f4b8e4"))
+
 	return model{
-		choices:  []string{"Neovim", "Corne", "Go", "Vibing"},
+		spinner:  s,
+		messages: []string{},
 		selected: make(map[int]struct{}),
 	}
 }
 
+type emailMsg struct{ messages []string }
+
+func retrieveEmails() tea.Msg {
+	messages := gmail.Screener()
+	return emailMsg{messages}
+}
+
 func (m model) Init() tea.Cmd {
-	return nil
+	return tea.Batch(m.spinner.Tick, retrieveEmails)
 }
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
@@ -37,7 +55,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			}
 
 		case key.Matches(msg, CommonKeyMap.Down):
-			if m.cursor < len(m.choices)-1 {
+			if m.cursor < len(m.messages)-1 {
 				m.cursor++
 			}
 
@@ -48,16 +66,32 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			} else {
 				m.selected[m.cursor] = struct{}{}
 			}
+			// case key.Matches(msg, CommonKeyMap.View):
+			// 	// m.viewing = m.cursor
+			// 	return m, tea.ExitAltScreen
 		}
+	case spinner.TickMsg:
+		var cmd tea.Cmd
+		m.spinner, cmd = m.spinner.Update(msg)
+		return m, cmd
+	case emailMsg:
+		m.messages = append(m.messages, msg.messages...)
 	}
 
 	return m, nil
 }
 
 func (m model) View() string {
-	s := "Here's a list of GOAT'd things...\n\n"
+	var b strings.Builder
 
-	for i, choice := range m.choices {
+	b.WriteString("gmail")
+	fmt.Fprintf(&b, " - loading %s", m.spinner.View())
+
+	b.WriteString("\n\n")
+	if len(m.messages) > 0 {
+		fmt.Fprintf(&b, "%d emails\n\n", len(m.messages))
+	}
+	for i, choice := range m.messages {
 		cursor := " "
 		if m.cursor == i {
 			cursor = ">"
@@ -68,10 +102,10 @@ func (m model) View() string {
 			checked = "x"
 		}
 
-		s += fmt.Sprintf("%s [%s] %s\n", cursor, checked, choice)
+		fmt.Fprintf(&b, "%s [%s] %s\n", cursor, checked, choice)
 	}
 
-	s += "\nPress q to quit.\n"
+	b.WriteString("\nPress q to quit.\n")
 
-	return s
+	return b.String()
 }

@@ -15,10 +15,7 @@ import (
 	"google.golang.org/api/option"
 )
 
-func Screener(show bool) {
-	if !show {
-		return
-	}
+func Screener() []string {
 	ctx := context.Background()
 	b, err := os.ReadFile("./gmail/credentials.json")
 	if err != nil {
@@ -50,7 +47,7 @@ func Screener(show bool) {
 		log.Fatalf("Unable to retrieve messages: %v", err)
 	}
 
-	fmt.Printf("Found %d messages from today\n\n", len(r.Messages))
+	messages := []string{}
 	for _, msg := range r.Messages {
 		fullMsg, err := srv.Users.Messages.Get(user, msg.Id).Do()
 		if err != nil {
@@ -76,8 +73,10 @@ func Screener(show bool) {
 		internalDate := time.Unix(fullMsg.InternalDate/1000, 0)
 		formattedDate := internalDate.Format("2006-01-02 15:04:05")
 
-		fmt.Printf("Date: %s, From: %s, Subject: %s\n", formattedDate, sender, subject)
+		messages = append(messages, fmt.Sprintf("Date: %s, From: %s, Subject: %s", formattedDate, sender, subject))
 	}
+
+	return messages
 }
 
 func getClient(config *oauth2.Config) (*http.Client, error) {
