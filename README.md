@@ -47,3 +47,4 @@ To authenticate run `go run main.goi setup`.
 - https://superhuman.com
 - https://www.shortwave.com
 - https://clickup.com/p/ai-agents/gmail
+- https://www.fyxer.com/
