@@ -25,13 +25,18 @@ To authenticate run `go run main.goi setup`.
 
 ## Roadmap
 
+### 2025 Q2
+
 - [x] Get all emails received today
-- [ ] Display emails using Charm
+- [ ] Display emails in table using Charm
 - [ ] Select email and load all emails from sender and be able to review
 - [ ] Mass delete selected emails by sender
 - [ ] Find all emails for a set of senders
+
+### Beyond
+
 - [ ] Keep track of senders and screen (isolate) new senders with Yes or No
-- [ ] Store and manage sender status in Turso DB
+- [ ] Store and manage sender status in SQLite DB
 - [ ] See if any emails from the sender are important
 - [ ] See if any screened out emails are important
 - [ ] Unsubscribe from emails
